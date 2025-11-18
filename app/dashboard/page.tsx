@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { connectMongo } from "@/lib/mongoose";
 import { Member } from "@/models/member";
 import { Card } from "@/components/ui/card";

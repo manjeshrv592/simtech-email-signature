@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:type="MailApp">
+
+  <!-- Basic Metadata -->
+  <Id>6a4d8fe5-1234-4d31-98b4-0a24cbe3a777</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>SimTech</ProviderName>
+  <DisplayName DefaultValue="SimTech Auto Signature"/>
+  <Description DefaultValue="Automatically inserts company signature in new emails, replies, and forwards."/>
+
+  <!-- Supports Compose mode -->
+  <Hosts>
+    <Host Name="Mailbox"/>
+  </Hosts>
+
+  <Requirements>
+    <Sets DefaultMinVersion="1.5">
+      <Set Name="Mailbox"/>
+    </Sets>
+  </Requirements>
+
+  <!-- Permissions -->
+  <Permissions>ReadWriteItem</Permissions>
+
+  <!-- Location of your Add-in code (HTML + JS bundle) -->
+  <FormSettings>
+    <Form xsi:type="ItemEdit">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://your-domain.com/addin/taskpane.html"/>
+      </DesktopSettings>
+      <TabletSettings>
+        <SourceLocation DefaultValue="https://your-domain.com/addin/taskpane.html"/>
+      </TabletSettings>
+      <PhoneSettings>
+        <SourceLocation DefaultValue="https://your-domain.com/addin/taskpane.html"/>
+      </PhoneSettings>
+    </Form>
+  </FormSettings>
+
+  <!-- Auto-run Commands -->
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <!-- Trigger on New Email -->
+    <Rule xsi:type="ItemIs" FormType="Edit" ItemType="Message"/>
+  </Rule>
+
+  <!-- Launch your JS when compose window opens -->
+  <ExtensionPoint xsi:type="LaunchEvent">
+    <LaunchEvents>
+      <LaunchEvent Type="OnNewMessageCompose" FunctionName="onMessageCompose"/>
+      <LaunchEvent Type="OnNewAppointmentOrganizer" FunctionName="onMessageCompose"/>
+      <LaunchEvent Type="OnMessageReply" FunctionName="onMessageCompose"/>
+      <LaunchEvent Type="OnMessageForward" FunctionName="onMessageCompose"/>
+    </LaunchEvents>
+  </ExtensionPoint>
+
+  <Runtime>
+    <Override>
+      <Resources>
+        <Script>
+          <Resource Url="https://your-domain.com/addin/functions.js"/>
+        </Script>
+      </Resources>
+    </Override>
+  </Runtime>
+
+</OfficeApp>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:type="MailApp">
+
+  <Id>eac2f71e-5c8a-42bc-b126-112233445566</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>SimTech</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="SimTech Auto Signature"/>
+  <Description DefaultValue="Automatically inserts SimTech signature into emails."/>
+
+  <IconUrl DefaultValue="https://simtech-email-signature.vercel.app/addin/icon.png"/>
+
+  <SupportUrl DefaultValue="https://simtech-email-signature.vercel.app"/>
+
+  <Hosts>
+    <Host Name="Mailbox"/>
+  </Hosts>
+
+  <Requirements>
+    <Sets DefaultMinVersion="1.5">
+      <Set Name="Mailbox"/>
+    </Sets>
+  </Requirements>
+
+  <Permissions>ReadWriteItem</Permissions>
+
+  <!-- Version Overrides REQUIRED for auto-launch -->
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" Version="1.0">
+    
+    <Requirements>
+      <bt:Sets DefaultMinVersion="1.5">
+        <bt:Set Name="Mailbox"/>
+      </bt:Sets>
+    </Requirements>
+
+    <Hosts>
+      <Host xsi:type="MailHost">
+        <DesktopFormFactor>
+          <FunctionFile resid="functionFile"/>
+          <ExtensionPoint xsi:type="LaunchEvent">
+            <LaunchEvents>
+              <LaunchEvent Type="OnNewMessageCompose" FunctionName="onMessageCompose"/>
+              <LaunchEvent Type="OnMessageReply" FunctionName="onMessageCompose"/>
+              <LaunchEvent Type="OnMessageForward" FunctionName="onMessageCompose"/>
+            </LaunchEvents>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+
+    <Resources>
+      <bt:Urls>
+        <bt:Url id="functionFile" DefaultValue="https://simtech-email-signature.vercel.app/addin/functions.js"/>
+      </bt:Urls>
+    </Resources>
+
+  </VersionOverrides>
+
+</OfficeApp>
