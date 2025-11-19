@@ -1,11 +1,14 @@
 Office.onReady(() => {
   try {
+    Office.context.mailbox.item.notificationMessages.replaceAsync("sig-status", {
+      type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage,
+      message: "Add-in runtime loaded",
+      persistent: false,
+    });
     if (Office && Office.actions && typeof Office.actions.associate === "function") {
       Office.actions.associate("onMessageCompose", onMessageCompose);
     }
-  } catch {
-    // noop
-  }
+  } catch {}
 });
 
 async function onMessageCompose(event) {
