@@ -155,11 +155,6 @@
         <bt:LongStrings>
           <bt:String id="paneReadSuperTipDescription" DefaultValue="Opens signature panel"/>
         </bt:LongStrings>
-        <bt:Images>
-          <bt:Image id="icon16" DefaultValue="https://simtech-email-signature.vercel.app/addin/icon.png"/>
-          <bt:Image id="icon32" DefaultValue="https://simtech-email-signature.vercel.app/addin/icon.png"/>
-          <bt:Image id="icon80" DefaultValue="https://simtech-email-signature.vercel.app/addin/icon.png"/>
-        </bt:Images>
       </Resources>
 
     </VersionOverrides>
