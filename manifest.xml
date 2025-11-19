@@ -42,9 +42,9 @@
 
   <DisableEntityHighlighting>false</DisableEntityHighlighting>
 
-  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1">
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
     <Requirements>
-      <bt:Sets DefaultMinVersion="1.10">
+      <bt:Sets DefaultMinVersion="1.5">
         <bt:Set Name="Mailbox"/>
       </bt:Sets>
     </Requirements>
@@ -52,31 +52,98 @@
     <Hosts>
       <Host xsi:type="MailHost">
         <DesktopFormFactor>
-          <Runtimes>
-            <Runtime resid="WebViewRuntime.Url">
-              <Override type="javascript" resid="JSRuntime.Url"/>
-            </Runtime>
-          </Runtimes>
-          <FunctionFile resid="functionFile"/>
-          <ExtensionPoint xsi:type="LaunchEvent">
-            <LaunchEvents>
-              <LaunchEvent Type="OnNewMessageCompose" FunctionName="onMessageCompose"/>
-              <LaunchEvent Type="OnMessageReply" FunctionName="onMessageCompose"/>
-              <LaunchEvent Type="OnMessageForward" FunctionName="onMessageCompose"/>
-            </LaunchEvents>
-            <SourceLocation resid="WebViewRuntime.Url"/>
+          <FunctionFile resid="FunctionFile.Url"/>
+          <ExtensionPoint xsi:type="MessageComposeCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group id="SimTechGroup">
+                <Label resid="Group.Label"/>
+                <Control xsi:type="Button" id="SimTechInsertButton">
+                  <Label resid="Button.Label"/>
+                  <Supertip>
+                    <Title resid="Button.Label"/>
+                    <Description resid="Button.Description"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16"/>
+                    <bt:Image size="32" resid="Icon.32"/>
+                    <bt:Image size="80" resid="Icon.80"/>
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>insertSignatureFromButton</FunctionName>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
           </ExtensionPoint>
+
+          <ExtensionPoint xsi:type="MessageReadCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group id="SimTechGroupRead">
+                <Label resid="Group.Label"/>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+
         </DesktopFormFactor>
       </Host>
     </Hosts>
 
     <Resources>
+      <bt:Images>
+        <bt:Image id="Icon.16" DefaultValue="https://simtech-email-signature.vercel.app/addin/icon.png"/>
+        <bt:Image id="Icon.32" DefaultValue="https://simtech-email-signature.vercel.app/addin/icon.png"/>
+        <bt:Image id="Icon.80" DefaultValue="https://simtech-email-signature.vercel.app/addin/icon.png"/>
+      </bt:Images>
       <bt:Urls>
-        <bt:Url id="functionFile" DefaultValue="https://simtech-email-signature.vercel.app/addin/functions.js"/>
-        <bt:Url id="WebViewRuntime.Url" DefaultValue="https://simtech-email-signature.vercel.app/addin/taskpane.html"/>
-        <bt:Url id="JSRuntime.Url" DefaultValue="https://simtech-email-signature.vercel.app/addin/functions.js"/>
+        <bt:Url id="FunctionFile.Url" DefaultValue="https://simtech-email-signature.vercel.app/addin/commands.html"/>
       </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="Group.Label" DefaultValue="SimTech Signature"/>
+        <bt:String id="Button.Label" DefaultValue="Insert Signature"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="Button.Description" DefaultValue="Insert the SimTech signature"/>
+      </bt:LongStrings>
     </Resources>
+
+    <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
+      <Requirements>
+        <bt:Sets DefaultMinVersion="1.10">
+          <bt:Set Name="Mailbox"/>
+        </bt:Sets>
+      </Requirements>
+
+      <Hosts>
+        <Host xsi:type="MailHost">
+          <DesktopFormFactor>
+            <Runtimes>
+              <Runtime resid="WebViewRuntime.Url">
+                <Override type="javascript" resid="JSRuntime.Url"/>
+              </Runtime>
+            </Runtimes>
+            <FunctionFile resid="functionFile"/>
+            <ExtensionPoint xsi:type="LaunchEvent">
+              <LaunchEvents>
+                <LaunchEvent Type="OnNewMessageCompose" FunctionName="onMessageCompose"/>
+                <LaunchEvent Type="OnMessageReply" FunctionName="onMessageCompose"/>
+                <LaunchEvent Type="OnMessageForward" FunctionName="onMessageCompose"/>
+              </LaunchEvents>
+              <SourceLocation resid="WebViewRuntime.Url"/>
+            </ExtensionPoint>
+          </DesktopFormFactor>
+        </Host>
+      </Hosts>
+
+      <Resources>
+        <bt:Urls>
+          <bt:Url id="functionFile" DefaultValue="https://simtech-email-signature.vercel.app/addin/functions.js"/>
+          <bt:Url id="WebViewRuntime.Url" DefaultValue="https://simtech-email-signature.vercel.app/addin/taskpane.html"/>
+          <bt:Url id="JSRuntime.Url" DefaultValue="https://simtech-email-signature.vercel.app/addin/functions.js"/>
+        </bt:Urls>
+      </Resources>
+
+    </VersionOverrides>
+
   </VersionOverrides>
 
 </OfficeApp>
