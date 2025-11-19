@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+    <script>
+      Office.onReady(() => {
+        console.log("Office.js ready for event-based activation");
+      });
+
+      // Register the function
+      Office.actions.associate("onMessageCompose", onMessageCompose);
+
+      async function onMessageCompose(event) {
+        console.log("onMessageCompose triggered");
+
+        try {
+          const email = Office.context.mailbox.userProfile.emailAddress;
+          console.log("User email:", email);
+
+          const apiUrl = `https://simtech-email-signature.vercel.app/api/signature?email=${encodeURIComponent(
+            email
+          )}`;
+
+          const res = await fetch(apiUrl, {
+            method: "GET",
+            headers: {
+              "x-sig-auth": "YOUR_ACTUAL_SECRET_TOKEN_HERE", // Replace with your actual token
+            },
+          });
+
+          console.log("API response status:", res.status);
+
+          if (!res.ok) {
+            console.error("Signature fetch failed:", res.status);
+            event.completed();
+            return;
+          }
+
+          const sigHtml = await res.text();
+          console.log("Signature HTML received:", sigHtml.substring(0, 100));
+
+          // Insert signature at the beginning of the email body
+          Office.context.mailbox.item.body.setSignatureAsync(
+            sigHtml,
+            { coercionType: Office.CoercionType.Html },
+            (asyncResult) => {
+              if (asyncResult.status === Office.AsyncResultStatus.Failed) {
+                console.error(
+                  "Failed to set signature:",
+                  asyncResult.error.message
+                );
+              } else {
+                console.log("Signature inserted successfully");
+              }
+              event.completed();
+            }
+          );
+        } catch (err) {
+          console.error("Error inserting signature:", err);
+          event.completed();
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <!-- This page is loaded in the background for event handling -->
+  </body>
+</html>

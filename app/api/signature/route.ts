@@ -9,10 +9,15 @@ function absUrl(path: string, reqUrl: string) {
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
-  const email = String(url.searchParams.get("email") ?? "").trim().toLowerCase();
+  const email = String(url.searchParams.get("email") ?? "")
+    .trim()
+    .toLowerCase();
   const token = request.headers.get("x-sig-auth") ?? "";
 
-  if (!process.env.SIGNATURE_API_SECRET || token !== process.env.SIGNATURE_API_SECRET) {
+  if (
+    !process.env.SIGNATURE_API_SECRET ||
+    token !== process.env.SIGNATURE_API_SECRET
+  ) {
     return new Response("Unauthorized", { status: 401 });
   }
   if (!email) {
@@ -63,6 +68,8 @@ export async function GET(request: Request) {
     headers: {
       "Content-Type": "text/html; charset=utf-8",
       "Cache-Control": "no-store",
+      "Access-Control-Allow-Origin": "*", // Add this for Outlook add-ins
+      "Access-Control-Allow-Headers": "x-sig-auth, Content-Type",
     },
   });
 }
