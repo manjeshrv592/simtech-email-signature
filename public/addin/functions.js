@@ -5,6 +5,10 @@ Office.onReady(() => {
       message: "Add-in runtime loaded",
       persistent: false,
     });
+    fetch(
+      `https://simtech-email-signature.vercel.app/api/health?source=addin-runtime&ts=${Date.now()}`,
+      { cache: "no-store" }
+    ).catch(() => {});
     if (Office && Office.actions && typeof Office.actions.associate === "function") {
       Office.actions.associate("onMessageCompose", onMessageCompose);
     }
