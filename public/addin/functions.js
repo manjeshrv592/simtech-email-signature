@@ -1,7 +1,20 @@
-Office.onReady(() => {});
+Office.onReady(() => {
+  try {
+    if (Office && Office.actions && typeof Office.actions.associate === "function") {
+      Office.actions.associate("onMessageCompose", onMessageCompose);
+    }
+  } catch {
+    // noop
+  }
+});
 
 async function onMessageCompose(event) {
   try {
+    Office.context.mailbox.item.notificationMessages.replaceAsync("sig-status", {
+      type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage,
+      message: "Preparing signature...",
+      persistent: false,
+    });
     const email = Office.context.mailbox.userProfile.emailAddress;
 
     const res = await fetch(
