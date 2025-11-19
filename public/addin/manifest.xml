@@ -54,14 +54,14 @@
     <Hosts>
       <Host xsi:type="MailHost">
         <DesktopFormFactor>
-          <FunctionFile resid="Commands.Url"/>
+          <FunctionFile resid="FunctionFile.Url"/>
           
           <!-- Dummy ExtensionPoint required by v1.0 schema -->
           <ExtensionPoint xsi:type="MessageComposeCommandSurface">
             <OfficeTab id="TabDefault">
               <Group id="msgComposeGroup">
                 <Label resid="groupLabel"/>
-                <Control xsi:type="Button" id="msgComposeOpenPaneButton">
+                <Control xsi:type="Button" id="SimTechInsertButton">
                   <Label resid="paneReadButtonLabel"/>
                   <Supertip>
                     <Title resid="paneReadSuperTipTitle"/>
@@ -72,8 +72,8 @@
                     <bt:Image size="32" resid="icon32"/>
                     <bt:Image size="80" resid="icon80"/>
                   </Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <SourceLocation resid="Taskpane.Url"/>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>insertSignatureFromButton</FunctionName>
                   </Action>
                 </Control>
               </Group>
@@ -91,73 +91,20 @@
         <bt:Image id="icon80" DefaultValue="https://simtech-email-signature.vercel.app/addin/icon.png"/>
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="Commands.Url" DefaultValue="https://simtech-email-signature.vercel.app/addin/commands.html"/>
+        <bt:Url id="FunctionFile.Url" DefaultValue="https://simtech-email-signature.vercel.app/addin/commands.html"/>
         <bt:Url id="Taskpane.Url" DefaultValue="https://simtech-email-signature.vercel.app/addin/taskpane.html"/>
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="groupLabel" DefaultValue="SimTech Signature"/>
-        <bt:String id="paneReadButtonLabel" DefaultValue="Signature"/>
-        <bt:String id="paneReadSuperTipTitle" DefaultValue="SimTech Signature"/>
+        <bt:String id="paneReadButtonLabel" DefaultValue="Insert Signature"/>
+        <bt:String id="paneReadSuperTipTitle" DefaultValue="Insert Signature"/>
       </bt:ShortStrings>
       <bt:LongStrings>
-        <bt:String id="paneReadSuperTipDescription" DefaultValue="Opens signature panel"/>
+        <bt:String id="paneReadSuperTipDescription" DefaultValue="Insert the SimTech signature"/>
       </bt:LongStrings>
     </Resources>
 
-    <!-- Version 1.1 VersionOverrides for LaunchEvent support -->
-    <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
-      
-      <Requirements>
-        <bt:Sets DefaultMinVersion="1.5">
-          <bt:Set Name="Mailbox"/>
-        </bt:Sets>
-      </Requirements>
-
-      <Hosts>
-        <Host xsi:type="MailHost">
-          
-          <!-- REQUIRED: Runtimes element for event-based activation -->
-          <Runtimes>
-            <Runtime resid="WebViewRuntime.Url">
-              <Override type="javascript" resid="JSRuntime.Url"/>
-            </Runtime>
-          </Runtimes>
-
-          <DesktopFormFactor>
-            
-            <FunctionFile resid="Commands.Url"/>
-
-            <ExtensionPoint xsi:type="LaunchEvent">
-              <LaunchEvents>
-                <LaunchEvent Type="OnNewMessageCompose" FunctionName="onMessageCompose"/>
-                <LaunchEvent Type="OnMessageRecipientsChanged" FunctionName="onMessageCompose"/>
-              </LaunchEvents>
-              <!-- Reference to runtime -->
-              <SourceLocation resid="WebViewRuntime.Url"/>
-            </ExtensionPoint>
-
-          </DesktopFormFactor>
-        </Host>
-      </Hosts>
-
-      <Resources>
-        <bt:Urls>
-          <bt:Url id="Commands.Url" DefaultValue="https://simtech-email-signature.vercel.app/addin/commands.html"/>
-          <bt:Url id="WebViewRuntime.Url" DefaultValue="https://simtech-email-signature.vercel.app/addin/commands.html"/>
-          <bt:Url id="JSRuntime.Url" DefaultValue="https://simtech-email-signature.vercel.app/addin/commands.html"/>
-          <bt:Url id="Taskpane.Url" DefaultValue="https://simtech-email-signature.vercel.app/addin/taskpane.html"/>
-        </bt:Urls>
-        <bt:ShortStrings>
-          <bt:String id="groupLabel" DefaultValue="SimTech Signature"/>
-          <bt:String id="paneReadButtonLabel" DefaultValue="Signature"/>
-          <bt:String id="paneReadSuperTipTitle" DefaultValue="SimTech Signature"/>
-        </bt:ShortStrings>
-        <bt:LongStrings>
-          <bt:String id="paneReadSuperTipDescription" DefaultValue="Opens signature panel"/>
-        </bt:LongStrings>
-      </Resources>
-
-    </VersionOverrides>
+    
 
   </VersionOverrides>
 
