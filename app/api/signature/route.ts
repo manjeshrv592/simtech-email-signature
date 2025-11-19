@@ -13,19 +13,24 @@ export async function GET(request: Request) {
     .trim()
     .toLowerCase();
   const token = request.headers.get("x-sig-auth") ?? "";
+  const originHeader = request.headers.get("origin") ?? "";
+  const selfOrigin = new URL(request.url).origin;
 
-  if (
-    !process.env.SIGNATURE_API_SECRET ||
-    token !== process.env.SIGNATURE_API_SECRET
-  ) {
-    return new Response("Unauthorized", { status: 401 });
+  if (process.env.SIGNATURE_API_SECRET) {
+    const tokenOk = token === process.env.SIGNATURE_API_SECRET;
+    const sameOrigin = originHeader === selfOrigin;
+    if (!tokenOk && !sameOrigin) {
+      return new Response("Unauthorized", { status: 401 });
+    }
   }
   if (!email) {
     return new Response("Email is required", { status: 400 });
   }
 
   await connectMongo();
-  const doc = await Member.findOne({ email }).lean();
+  const doc = await Member.findOne({ email })
+    .collation({ locale: "en", strength: 2 })
+    .lean();
 
   if (!doc) {
     return new Response("", { status: 404 });

@@ -21,7 +21,7 @@
   </Hosts>
 
   <Requirements>
-    <Sets DefaultMinVersion="1.5">
+    <Sets DefaultMinVersion="1.10">
       <Set Name="Mailbox"/>
     </Sets>
   </Requirements>
@@ -52,6 +52,11 @@
     <Hosts>
       <Host xsi:type="MailHost">
         <DesktopFormFactor>
+          <Runtimes>
+            <Runtime resid="WebViewRuntime.Url">
+              <Override type="javascript" resid="JSRuntime.Url"/>
+            </Runtime>
+          </Runtimes>
           <FunctionFile resid="functionFile"/>
           <ExtensionPoint xsi:type="LaunchEvent">
             <LaunchEvents>
@@ -59,6 +64,7 @@
               <LaunchEvent Type="OnMessageReply" FunctionName="onMessageCompose"/>
               <LaunchEvent Type="OnMessageForward" FunctionName="onMessageCompose"/>
             </LaunchEvents>
+            <SourceLocation resid="WebViewRuntime.Url"/>
           </ExtensionPoint>
         </DesktopFormFactor>
       </Host>
@@ -67,6 +73,8 @@
     <Resources>
       <bt:Urls>
         <bt:Url id="functionFile" DefaultValue="https://simtech-email-signature.vercel.app/addin/functions.js"/>
+        <bt:Url id="WebViewRuntime.Url" DefaultValue="https://simtech-email-signature.vercel.app/addin/taskpane.html"/>
+        <bt:Url id="JSRuntime.Url" DefaultValue="https://simtech-email-signature.vercel.app/addin/functions.js"/>
       </bt:Urls>
     </Resources>
   </VersionOverrides>

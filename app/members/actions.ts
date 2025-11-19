@@ -8,7 +8,7 @@ export async function createMember(formData: FormData): Promise<void> {
   await connectMongo();
   const firstName = String(formData.get("firstName") ?? "").trim();
   const lastName = String(formData.get("lastName") ?? "").trim();
-  const email = String(formData.get("email") ?? "").trim();
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const phoneNumber = String(formData.get("phoneNumber") ?? "").trim();
   const designation = String(formData.get("designation") ?? "").trim();
   const signatureEnabled =
@@ -57,7 +57,7 @@ export async function updateMember(formData: FormData): Promise<void> {
   const id = String(formData.get("id") ?? "");
   const firstName = String(formData.get("firstName") ?? "").trim();
   const lastName = String(formData.get("lastName") ?? "").trim();
-  const email = String(formData.get("email") ?? "").trim();
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const phoneNumber = String(formData.get("phoneNumber") ?? "").trim();
   const designation = String(formData.get("designation") ?? "").trim();
   const signatureEnabled =
