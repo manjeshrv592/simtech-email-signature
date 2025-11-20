@@ -75,7 +75,11 @@ async function insertSignatureFromButton(event) {
       persistent: false,
     });
     event.completed();
-  }
 }
 
 window.insertSignatureFromButton = insertSignatureFromButton;
+
+// Register the button function with Office.actions (required for ExecuteFunction)
+if (Office.actions) {
+  Office.actions.associate("insertSignatureFromButton", insertSignatureFromButton);
+}}
