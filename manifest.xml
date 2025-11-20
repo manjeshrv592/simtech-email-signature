@@ -5,8 +5,8 @@
   xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
   xsi:type="MailApp">
 
-  <Id>eac2f71e-5c8a-42bc-b126-112233445566</Id>
-  <Version>1.0.0.0</Version>
+  <Id>9b7a3b9c-3f7a-4464-8c24-1a9c83b9a4b8</Id>
+  <Version>1.0.1.0</Version>
   <ProviderName>SimTech</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="SimTech Auto Signature"/>
